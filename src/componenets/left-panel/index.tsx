@@ -1,11 +1,8 @@
 import { useState } from "react";
-import { FileText, ArrowRight, Plus, Lightbulb } from "lucide-react";
-import {
-  ADD_ONS,
-  MaxTextLength as maxLength,
-  SamplePrompts,
-  type AddOn,
-} from "@/constant";
+import { FileText, ArrowRight, Lightbulb } from "lucide-react";
+import { ADD_ONS, type AddOn } from "@/constant/add-on";
+import { MaxTextLength as maxLength, SamplePrompts } from "@/constant";
+import { AddOnButtons } from "../Add-on";
 
 export const LeftPanel = () => {
   const [description, setDescription] = useState("");
@@ -17,7 +14,6 @@ export const LeftPanel = () => {
 
     setDescription((prev) => {
       const combined = prev.trim() ? `${prev.trimEnd()}\n\n${block}` : block;
-
       return combined.slice(0, maxLength);
     });
   };
@@ -60,36 +56,13 @@ export const LeftPanel = () => {
           </p>
 
           <div className="mt-4 grid gap-3 sm:grid-cols-3">
-            {ADD_ONS.map((addOn) => {
-              const Icon = addOn.icon;
-              return (
-                <button
-                  key={addOn.id}
-                  type="button"
-                  onClick={() => handleAddOnClick(addOn)}
-                  className="flex items-start justify-between gap-2 rounded-xl border border-slate-300 bg-white p-3.5 text-left shadow-sm transition-colors hover:border-indigo-400 hover:bg-indigo-50/50"
-                >
-                  <div className="flex items-start gap-3">
-                    <span
-                      className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg ${addOn.iconClass}`}
-                    >
-                      <Icon className="h-4.5 w-4.5" />
-                    </span>
-                    <div>
-                      <p className="text-sm font-semibold text-slate-800">
-                        {addOn.label}
-                      </p>
-                      <p className="mt-0.5 text-xs text-slate-500">
-                        {addOn.description}
-                      </p>
-                    </div>
-                  </div>
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-indigo-100 text-indigo-600">
-                    <Plus className="h-3.5 w-3.5" />
-                  </span>
-                </button>
-              );
-            })}
+            {ADD_ONS.map((addOn) => (
+              <AddOnButtons
+                key={addOn.id}
+                addOn={addOn}
+                handleAddOnClick={handleAddOnClick}
+              />
+            ))}
           </div>
         </div>
 

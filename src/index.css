@@ -4,6 +4,15 @@
   --primary-hover: #4338ca;
   --primary-light: #eef2ff;
 
+  --secondary: #afb5bf;
+  --secondary-hover: #475569;
+
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+
+  --success: #16a34a;
+  --success-hover: #15803d;
+
   --text-primary: #0f172a;
   --text-secondary: #64748b;
 
