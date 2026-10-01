@@ -1,40 +1,55 @@
 # AI Invoice
 
-AI-powered invoice generation using Gemini with a strict **user-data-only** contract.
+An AI-powered invoice generator that turns natural-language input into structured invoices using Gemini.
 
-## Product Rules
+The main idea is simple: **the AI extracts what the user says, while the application handles the actual invoice logic and calculations.**
 
-The application is designed to generate invoices only from information explicitly provided by the user.
+## What it does
 
-- Gemini extracts only facts explicitly supplied by the user.
-- No RAG, client directory, product catalog, default prices, default tax rates, or invented customer/seller details.
-- Missing or ambiguous invoice information is returned to the UI for clarification.
-- Tax/GST must be explicitly supplied by the user, including an explicit **"no tax"** instruction when the user wants zero tax.
-- Supports dynamic taxes such as GST, SGST, CGST, IGST, VAT, CESS, TDS/TCS, and custom tax labels/rates when explicitly provided.
-- Multiple taxes can be applied where explicitly specified.
-- A seller profile is optional.
-- Users can skip the seller profile entirely.
-- Multiple GST registrations can be stored in a seller profile.
-- Invoice number and date can either be supplied by the user or explicitly allowed to be generated automatically.
-- Subtotals, discounts, tax amounts, and totals are calculated deterministically by application code rather than by Gemini.
-- Explicit discounts supplied by the user are applied; discounts are never invented.
-- Currency is extracted from the user's input and is not restricted to a fixed currency list.
+You can describe an invoice naturally, for example:
 
-## Project Structure
+> Create an invoice for ABC Ltd with 3 website designs at ₹12,500 each with 5% GST. Payment is due in 30 days.
 
-```text
-AI-Invoice/
-├── app-frontend/
-│   ├── src/
-│   ├── public/
-│   ├── package.json
-│   └── ...
-│
-├── server/
-│   ├── src/
-│   ├── package.json
-│   ├── tsconfig.json
-│   └── ...
-│
-├── .gitignore
-└── README.md
+The application extracts the relevant information, validates it, calculates the invoice values, and generates a structured invoice that can be edited and printed.
+
+The goal is to keep AI responsible for **understanding the input**, not for making up invoice data or performing financial calculations.
+
+---
+
+## How it works
+
+```mermaid
+flowchart TD
+    A[User enters invoice details] --> B[React Frontend]
+
+    B --> C[POST /api/invoice/generate]
+
+    C --> D[Express Backend]
+
+    D --> E[Gemini Extraction Service]
+
+    E --> F[Structured Invoice Data]
+
+    F --> G[Validation]
+
+    G --> H{Missing or ambiguous data?}
+
+    H -- Yes --> I[Return clarification to UI]
+    I --> A
+
+    H -- No --> J[Deterministic Calculations]
+
+    J --> K[Subtotal]
+    J --> L[Discount]
+    J --> M[Tax / GST]
+    J --> N[Grand Total]
+
+    K --> O[Invoice State]
+    L --> O
+    M --> O
+    N --> O
+
+    O --> P[Invoice Preview]
+
+    P --> Q[Edit / Add-ons]
+    P --> R[Print / PDF]
