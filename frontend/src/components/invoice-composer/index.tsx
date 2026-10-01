@@ -123,24 +123,6 @@ export const InvoiceComposer: FC<Props> = ({
             </span>
           </div>
 
-          <div className="mt-4">
-            <p className="mb-2 text-[11px] font-semibold text-slate-500 dark:text-slate-400">
-              Try an example
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {SamplePrompts.map((example) => (
-                <button
-                  key={example}
-                  type="button"
-                  onClick={() => setExample(example)}
-                  className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-[11px] font-medium text-slate-600 transition hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-indigo-600 dark:hover:bg-indigo-950/30 dark:hover:text-indigo-300"
-                >
-                  {example.split(".")[0].slice(0, 30)}…
-                </button>
-              ))}
-            </div>
-          </div>
-
           <div className="mt-5 flex gap-3">
             <button
               type="button"
@@ -180,10 +162,7 @@ export const InvoiceComposer: FC<Props> = ({
             />
             <span>
               <span className="block text-xs font-semibold text-slate-700 dark:text-slate-200">
-                Automatically add invoice number & date if missing
-              </span>
-              <span className="mt-0.5 block text-[11px] text-slate-500 dark:text-slate-400">
-                Otherwise, I’ll ask you for them.
+                Automatically add invoice number & date
               </span>
             </span>
           </label>
