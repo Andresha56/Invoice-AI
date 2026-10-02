@@ -3,7 +3,7 @@ import express from "express";
 import type { NextFunction, Request, Response } from "express";
 import routes from "./routes/index.js";
 
-const DEFAULT_ALLOWED_ORIGINS = ["http://localhost:5173", "http://127.0.0.1:5173"];
+const DEFAULT_ALLOWED_ORIGINS = ["http://localhost:5173", "http://127.0.0.1:5173","https://invoice-ai-vert.vercel.app/"];
 
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(",").map((origin) => origin.trim())
